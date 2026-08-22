@@ -1,4 +1,4 @@
-# Travel 2 Dubai Platform
+# Travel 2 Dubai Platform (ankush-travel2dubai)
 
 A unified monorepo repository containing all services for the **Travel 2 Dubai** booking & management platform.
 
@@ -7,7 +7,7 @@ A unified monorepo repository containing all services for the **Travel 2 Dubai**
 ## 📁 Repository Structure
 
 ```
-travel2dubai/
+ankush-travel2dubai/
 ├── frontend/          # Client-facing web portal (Next.js 15, Tailwind CSS, Redux)
 ├── backend/           # Core REST API server (Express.js, TypeScript, MongoDB, Mongoose)
 ├── admin/             # Admin management control panel (Next.js 15, Turbopack, Redux)
@@ -45,8 +45,8 @@ travel2dubai/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/Rajesh81704/travel2dubai.git
-cd travel2dubai
+git clone https://github.com/Rajesh81704/ankush-travel2dubai.git
+cd ankush-travel2dubai
 ```
 
 ### 2. Install dependencies for each sub-project
