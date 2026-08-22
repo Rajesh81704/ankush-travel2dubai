@@ -1,0 +1,25 @@
+{
+  "name": "travel2dubai",
+  "version": "1.0.0",
+  "description": "Monorepo for Travel 2 Dubai platform (Frontend, Backend, Admin Dashboard, Storage Microservice)",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:admin": "npm run dev --prefix admin",
+    "dev:storage": "npm run start --prefix storage-service",
+    "build:frontend": "npm run build --prefix frontend",
+    "build:backend": "npm run build --prefix backend",
+    "build:admin": "npm run build --prefix admin"
+  },
+  "keywords": [
+    "travel2dubai",
+    "dubai-tours",
+    "monorepo",
+    "nextjs",
+    "express",
+    "mongodb"
+  ],
+  "author": "Rajesh & Team",
+  "license": "ISC"
+}
