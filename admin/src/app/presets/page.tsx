@@ -478,7 +478,8 @@ export default function PresetsPage() {
                 <div key={preset._id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
                   <div className="relative h-44 bg-muted">
                     {coverImg ? (
-                      <Image src={coverImg} alt={h.hotelName} fill className="object-cover" />
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={coverImg} alt={h.hotelName} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-muted-foreground/50">
                         <Hotel className="w-12 h-12" />
@@ -548,7 +549,8 @@ export default function PresetsPage() {
                 <div key={preset._id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
                   <div className="relative h-44 bg-muted">
                     {coverImg ? (
-                      <Image src={coverImg} alt={s.name} fill className="object-cover" />
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={coverImg} alt={s.name} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-muted-foreground/50">
                         <Camera className="w-12 h-12" />
@@ -642,13 +644,14 @@ export default function PresetsPage() {
 
             if (preset.type === "flight") {
               const f = preset.data as PresetFlightData;
-              const coverImage = f.images?.[0]?.url;
+              const coverImage = f.images?.[0]?.url || (f as any).image?.url;
 
               return (
                 <div key={preset._id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                  <div className="relative h-40 w-full bg-muted flex items-center justify-center">
+                  <div className="relative h-44 w-full bg-slate-900 flex items-center justify-center overflow-hidden">
                     {coverImage ? (
-                      <Image src={coverImage} alt={f.airline} fill className="object-cover" />
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={coverImage} alt={f.airline || "Flight"} className="w-full h-full object-cover" />
                     ) : (
                       <Plane className="w-12 h-12 text-muted-foreground/40" />
                     )}

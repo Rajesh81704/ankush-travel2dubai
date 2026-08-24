@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Check, X, MapPin, Plane, Building2, Star, Camera } from "lucide-react";
+import { Check, X, MapPin, Plane, Building2, Star, Camera, Eye, Ticket } from "lucide-react";
 import type { FlightOption, HotelOption, ItineraryDay, SightseeingOption } from "./types";
 import ReviewSection from "./ReviewSection";
 
@@ -471,15 +471,33 @@ function SightseeingCard({ sightseeing }: { sightseeing: SightseeingOption }) {
 }
 
 function FlightCard({ flight }: { flight: FlightOption }) {
+  const [selectedTicketImg, setSelectedTicketImg] = useState<string | null>(null);
+
   const classLabel: Record<string, string> = {
     economy: "Economy",
     business: "Business",
     first: "First Class",
   };
 
+  // Collect all possible ticket / flight images from backend properties
+  const rawImages: any[] = [];
+  if (flight.image?.url) rawImages.push(flight.image.url);
+  if (Array.isArray((flight as any).images)) {
+    (flight as any).images.forEach((img: any) => {
+      if (typeof img === "string") rawImages.push(img);
+      else if (img?.url) rawImages.push(img.url);
+    });
+  }
+  if ((flight as any).imageUrl) rawImages.push((flight as any).imageUrl);
+  if ((flight as any).ticketImage) rawImages.push((flight as any).ticketImage);
+  if ((flight as any).ticketUrl) rawImages.push((flight as any).ticketUrl);
+
+  // Remove duplicates and filter valid URLs
+  const ticketImages = Array.from(new Set(rawImages.filter(Boolean)));
+
   return (
-    <div className="bg-[#1a3560] rounded-[14px] overflow-hidden text-white">
-      <div className="flex items-stretch">
+    <div className="bg-[#1a3560] rounded-[14px] overflow-hidden text-white shadow-md">
+      <div className="flex items-stretch flex-wrap sm:flex-nowrap">
         {/* Left: departure + route + arrival */}
         <div className="flex-1 p-4 sm:p-5 flex items-center gap-2 sm:gap-4 min-w-0">
           {/* Departure */}
@@ -487,7 +505,7 @@ function FlightCard({ flight }: { flight: FlightOption }) {
             <p className="text-[20px] sm:text-[22px] font-extrabold text-[#38BDF8] leading-none">
               {flight.departureTime}
               <span className="text-[12px] font-semibold text-[#94A3B8] ml-1">
-                ({flight.departureAirport.match(/\(([^)]+)\)/)?.[1] ?? flight.departureAirport.slice(0, 3).toUpperCase()})
+                ({flight.departureAirport?.match(/\(([^)]+)\)/)?.[1] ?? flight.departureAirport?.slice(0, 3).toUpperCase() ?? ""})
               </span>
             </p>
             <p className="text-[11px] text-[#CBD5E1] mt-1 leading-snug">
@@ -512,7 +530,7 @@ function FlightCard({ flight }: { flight: FlightOption }) {
             <p className="text-[20px] sm:text-[22px] font-extrabold text-[#38BDF8] leading-none">
               {flight.arrivalTime}
               <span className="text-[12px] font-semibold text-[#94A3B8] ml-1">
-                ({flight.arrivalAirport.match(/\(([^)]+)\)/)?.[1] ?? flight.arrivalAirport.slice(0, 3).toUpperCase()})
+                ({flight.arrivalAirport?.match(/\(([^)]+)\)/)?.[1] ?? flight.arrivalAirport?.slice(0, 3).toUpperCase() ?? ""})
               </span>
             </p>
             <p className="text-[11px] text-[#CBD5E1] mt-1 leading-snug">
@@ -524,26 +542,17 @@ function FlightCard({ flight }: { flight: FlightOption }) {
         </div>
 
         {/* Divider */}
-        <div className="w-px bg-[#2d4a7a] self-stretch" />
+        <div className="hidden sm:block w-px bg-[#2d4a7a] self-stretch" />
 
         {/* Right: airline info */}
-        <div className="w-[130px] sm:w-[160px] shrink-0 p-4 sm:p-5 flex flex-col justify-center gap-2">
-          {flight.image?.url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={flight.image.url}
-              alt={flight.airline}
-              className="h-7 w-auto object-contain max-w-[80px]"
-            />
-          ) : (
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded bg-[#2d4a7a] flex items-center justify-center">
-                <Plane className="w-3.5 h-3.5 text-[#38BDF8]" />
-              </div>
+        <div className="w-full sm:w-[160px] shrink-0 p-4 sm:p-5 flex flex-col justify-center gap-2 border-t sm:border-t-0 border-[#2d4a7a]">
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded bg-[#2d4a7a] flex items-center justify-center shrink-0">
+              <Plane className="w-3.5 h-3.5 text-[#38BDF8]" />
             </div>
-          )}
+            <p className="text-[13px] font-bold text-white leading-tight truncate">{flight.airline}</p>
+          </div>
           <div>
-            <p className="text-[13px] font-bold text-white leading-tight">{flight.airline}</p>
             <p className="text-[12px] text-[#94A3B8]">{flight.flightNumber}</p>
             <p className="text-[11px] text-[#94A3B8] mt-1">
               Class{" "}
@@ -555,7 +564,7 @@ function FlightCard({ flight }: { flight: FlightOption }) {
         </div>
 
         {/* Plane icon corner */}
-        <div className="pr-4 pt-4 shrink-0 self-start">
+        <div className="hidden sm:block pr-4 pt-4 shrink-0 self-start">
           <Plane className="w-4 h-4 text-[#475569] rotate-0" />
         </div>
       </div>
@@ -571,6 +580,61 @@ function FlightCard({ flight }: { flight: FlightOption }) {
           </>
         )}
       </div>
+
+      {/* Render Ticket Image Section if images exist */}
+      {ticketImages.length > 0 && (
+        <div className="bg-[#0f1f3a] p-4 border-t border-[#2d4a7a]">
+          <p className="text-[12px] font-semibold text-[#38BDF8] mb-2.5 flex items-center gap-1.5">
+            <Ticket className="w-4 h-4 text-[#38BDF8]" /> Ticket / Flight Document
+          </p>
+          <div className="flex items-center gap-3 overflow-x-auto pb-1">
+            {ticketImages.map((imgUrl, idx) => (
+              <div
+                key={idx}
+                onClick={() => setSelectedTicketImg(imgUrl)}
+                className="relative group cursor-pointer rounded-lg overflow-hidden border border-[#2d4a7a] bg-[#152a4e] hover:border-[#38BDF8] transition-all shrink-0 max-w-[280px] sm:max-w-[340px]"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imgUrl}
+                  alt={`Ticket ${idx + 1}`}
+                  className="w-full h-36 sm:h-44 object-contain bg-[#112240] p-1.5 rounded-md"
+                />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-xs text-white font-medium">
+                  <Eye className="w-4 h-4" /> View Full Ticket
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Full-screen Ticket Modal Lightbox */}
+      {selectedTicketImg && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setSelectedTicketImg(null)}
+        >
+          <div
+            className="relative max-w-4xl max-h-[90vh] bg-[#112240] rounded-xl overflow-hidden p-2 shadow-2xl border border-[#2d4a7a]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedTicketImg(null)}
+              className="absolute top-4 right-4 z-10 bg-black/60 hover:bg-black text-white p-2 rounded-full transition-all"
+              title="Close Preview"
+            >
+              ✕
+            </button>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={selectedTicketImg}
+              alt="Ticket Full Preview"
+              className="w-full max-h-[85vh] object-contain rounded-lg"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

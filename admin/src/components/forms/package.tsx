@@ -276,6 +276,7 @@ export default function PackageForm({ initialData, onSubmit }: PackageFormProps)
     } else if (presetModalType === "flight") {
       const newFlights: FlightOption[] = selectedPresets.map((p) => {
         const f = p.data as PresetFlightData;
+        const firstImg = f.images?.[0] || (f as any).image;
         return {
           type: "main",
           airline: f.airline || "",
@@ -292,6 +293,8 @@ export default function PackageForm({ initialData, onSubmit }: PackageFormProps)
           class: (f.class as any) || "economy",
           price: f.price || 0,
           description: f.description || "",
+          image: firstImg ? { url: firstImg.url, public_id: firstImg.public_id || "" } : undefined,
+          images: f.images || (firstImg ? [firstImg] : []),
         };
       });
       const current = getValues("flights") || [];
