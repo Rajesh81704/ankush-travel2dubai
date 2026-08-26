@@ -34,6 +34,7 @@ import userRouter from "@/routes/user.route";
 import uploadRouter from "@/routes/upload.route";
 import visaRouter from "@/routes/visa.route";
 import presetRouter from "@/routes/preset.route";
+import siteSettingsRouter from "@/routes/siteSettings.route";
 
 import cron from "node-cron";
 import https from "https";
@@ -144,6 +145,8 @@ app.use("/admin", adminRouter);
 app.use("/upload", uploadRouter);
 app.use("/visa", visaRouter);
 app.use("/presets", presetRouter);
+app.use("/site-settings", siteSettingsRouter);
+app.use("/settings", siteSettingsRouter);
 
 /**
  * @swagger

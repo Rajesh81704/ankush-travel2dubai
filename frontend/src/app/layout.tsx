@@ -8,6 +8,8 @@ import { UserWrapper } from "@/components/layout/UserWrapper";
 import { ReduxStoreProvider } from "@/store";
 import { ChatBot } from "@/components/layout/ChatBot";
 
+import { SiteSettingsProvider } from "@/context/SiteSettingsContext";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -50,11 +52,13 @@ export default function RootLayout({
       >
         <ReduxStoreProvider>
           <UserWrapper>
-            <Navbar />
-            {children}
-            <ChatBot />
-            <Footer />
-            <Toaster />
+            <SiteSettingsProvider>
+              <Navbar />
+              {children}
+              <ChatBot />
+              <Footer />
+              <Toaster />
+            </SiteSettingsProvider>
           </UserWrapper>
         </ReduxStoreProvider>
       </body>

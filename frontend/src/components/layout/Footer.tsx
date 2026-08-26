@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, Send } from "lucide-react";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 const quickLinks = [
   { name: "Home", href: "/" },
@@ -24,6 +24,7 @@ const supportLinks = [
 ];
 
 export const Footer = () => {
+  const { settings } = useSiteSettings();
   return (
     <footer className="bg-[#0F172A] text-gray-400 print:hidden">
       {/* Newsletter Banner */}
@@ -65,44 +66,37 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-5">
             <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3.5 py-2 inline-flex items-center justify-center shadow-md">
-              <Image
-                src="/logo.png"
-                alt="TripToo Travels"
-                width={200}
-                height={200}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={settings.footerLogo?.url || settings.logo?.url || "/logo.png"}
+                alt="Travel2Dubai"
                 className="h-12 lg:h-14 w-auto object-contain"
               />
             </div>
             <p className="text-[14px] text-gray-400 leading-relaxed max-w-[280px]">
-              Explore the world with us. Creating memories and lasting journeys, one destination at a time.
+              {settings.footer.tagline || "Your trusted partner for memorable travel packages and hassle-free international visas."}
             </p>
 
             {/* Contact info */}
             <div className="space-y-2.5">
-              <div className="flex items-center gap-2.5 text-[13px] text-gray-400">
-                <Phone className="h-4 w-4 text-[#F59E0B] shrink-0" />
-                <span>+91 8767656900 / +18046504477 (24x7 WhatsApp)</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-[13px] text-gray-400">
-                <Mail className="h-4 w-4 text-[#F59E0B] shrink-0" />
-                <span>info@triptootravels.com</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-[13px] text-gray-400">
-                <Mail className="h-4 w-4 text-[#F59E0B] shrink-0" />
-                <span>support@triptootravels.com</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-[13px] text-gray-400">
-                <Mail className="h-4 w-4 text-[#F59E0B] shrink-0" />
-                <span>reservations@triptootravels.com</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-[13px] text-gray-400">
-                <Mail className="h-4 w-4 text-[#F59E0B] shrink-0" />
-                <span>pooja.gupta@triptootravels.com</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-[13px] text-gray-400">
-                <MapPin className="h-4 w-4 text-[#F59E0B] shrink-0 mt-0.5" />
-                <span>Flat/Office-201, 2nd Floor, A Wing, Agnes Paradise Building, Opp. Vijay Paradise, Vasai East, 401208</span>
-              </div>
+              {settings.contact.phone && (
+                <div className="flex items-center gap-2.5 text-[13px] text-gray-400">
+                  <Phone className="h-4 w-4 text-[#F59E0B] shrink-0" />
+                  <span>{settings.contact.phone}</span>
+                </div>
+              )}
+              {settings.contact.email && (
+                <div className="flex items-center gap-2.5 text-[13px] text-gray-400">
+                  <Mail className="h-4 w-4 text-[#F59E0B] shrink-0" />
+                  <span>{settings.contact.email}</span>
+                </div>
+              )}
+              {settings.contact.address && (
+                <div className="flex items-start gap-2.5 text-[13px] text-gray-400">
+                  <MapPin className="h-4 w-4 text-[#F59E0B] shrink-0 mt-0.5" />
+                  <span>{settings.contact.address}</span>
+                </div>
+              )}
             </div>
 
             {/* Socials */}
@@ -239,7 +233,7 @@ export const Footer = () => {
         {/* Bottom bar */}
         <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] text-gray-500">
-            © 2024 TripToo Travels. All rights reserved.
+            {settings.footer.copyright || "© 2026 Travel2Dubai. All rights reserved."}
           </p>
           <div className="flex items-center gap-4">
             <span className="text-[11px] text-gray-600 uppercase tracking-widest">Payment Methods</span>

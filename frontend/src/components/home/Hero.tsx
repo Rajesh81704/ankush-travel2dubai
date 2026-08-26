@@ -2,9 +2,11 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
-import { ArrowRight, MapPin, Calendar, Users, Search, Star, Shield, Clock } from "lucide-react";
+import { ArrowRight, MapPin, Calendar, Users, Search, Star, Shield, Clock, Sparkles } from "lucide-react";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 export const Hero = () => {
+  const { settings } = useSiteSettings();
   const router = useRouter();
   const [destination, setDestination] = useState("");
   const [checkIn, setCheckIn] = useState("");
@@ -29,7 +31,7 @@ export const Hero = () => {
       <div className="relative h-[88vh] min-h-[620px] max-h-[860px] overflow-hidden pt-[68px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/bg-image/image.png"
+          src={settings.hero.bgImage?.url || "/bg-image/image.png"}
           alt="Travel destination"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: "center 35%" }}
@@ -43,19 +45,21 @@ export const Hero = () => {
           <div className="max-w-[1320px] mx-auto w-full px-6 lg:px-16">
             <div className="max-w-[600px]">
 
+              {settings.hero.badge && (
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4">
+                  <Sparkles className="w-4 h-4" /> {settings.hero.badge}
+                </div>
+              )}
 
               <h1
                 className="font-extrabold text-white leading-[1.1] tracking-tight drop-shadow-2xl mb-4 heading-premium"
                 style={{ fontSize: "clamp(2.2rem, 4.8vw, 3.5rem)" }}
               >
-                Explore The World <br />
-                <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 bg-clip-text text-transparent italic" style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)" }}>
-                  With Legendary Live Journeys
-                </span>
+                {settings.hero.title || "Explore Dubai Like Never Before"}
               </h1>
 
               <p className="text-white/85 text-[15px] sm:text-[17px] leading-relaxed font-normal mb-7 max-w-[480px]">
-                Handcrafted premium holiday packages, flight reservations, luxury stays, and fast-track global visa services.
+                {settings.hero.subtitle || "Handcrafted luxury tours, visa assistance, and unforgettable experiences in Dubai."}
               </p>
 
               <div className="flex flex-wrap items-center gap-3 mb-8">

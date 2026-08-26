@@ -19,6 +19,7 @@ import {
 import { toast } from "sonner";
 import api from "@/lib/api";
 import { useAppSelector } from "@/store/hooks";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 const benefits = [
   "Personalized travel recommendations & custom itineraries",
@@ -28,6 +29,7 @@ const benefits = [
 ];
 
 export default function ContactPage() {
+  const { settings } = useSiteSettings();
   const user = useAppSelector((state) => state.auth.user);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -210,65 +212,82 @@ export default function ContactPage() {
               </h3>
 
               <div className="space-y-4 text-xs">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 text-amber-400">
-                    <Phone className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block">Phone & WhatsApp Support (24x7)</span>
-                    <div className="flex flex-col gap-0.5 mt-0.5">
-                      <a href="tel:+918767656900" className="font-semibold text-white hover:text-amber-400 transition-colors">
-                        +91 8767656900 (India Desk)
+                {settings.contact.phone && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 text-amber-400">
+                      <Phone className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block">Phone Support</span>
+                      <a href={`tel:${settings.contact.phone}`} className="font-semibold text-white hover:text-amber-400 transition-colors block">
+                        {settings.contact.phone}
                       </a>
-                      <a href="https://wa.me/18046504477" target="_blank" rel="noopener noreferrer" className="font-semibold text-amber-400 hover:text-amber-300 transition-colors">
-                        +18046504477 (WhatsApp 24x7)
+                      {settings.contact.alternatePhone && (
+                        <a href={`tel:${settings.contact.alternatePhone}`} className="font-semibold text-slate-300 hover:text-amber-400 transition-colors block mt-0.5">
+                          {settings.contact.alternatePhone}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {settings.contact.email && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 text-blue-400">
+                      <Mail className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block">Email Support</span>
+                      <a href={`mailto:${settings.contact.email}`} className="font-semibold text-white hover:text-amber-400 transition-colors block">
+                        {settings.contact.email}
                       </a>
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 text-blue-400">
-                    <Mail className="w-4 h-4" />
+                {settings.contact.workingHours && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block">Working Hours</span>
+                      <span className="font-semibold text-white">{settings.contact.workingHours}</span>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-slate-400 block">Email Inquiry</span>
-                    <a href="mailto:info@triptootravels.com" className="font-semibold text-white hover:text-amber-400 transition-colors block">
-                      info@triptootravels.com
-                    </a>
-                    <a href="mailto:support@triptootravels.com" className="font-semibold text-white hover:text-amber-400 transition-colors block mt-0.5">
-                      support@triptootravels.com
-                    </a>
-                    <a href="mailto:reservations@triptootravels.com" className="font-semibold text-amber-400 hover:text-amber-300 transition-colors block mt-0.5">
-                      reservations@triptootravels.com
-                    </a>
-                  </div>
-                </div>
+                )}
 
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400">
-                    <Clock className="w-4 h-4" />
+                {settings.contact.address && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0 text-purple-400">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block">Head Office Address</span>
+                      <span className="font-semibold text-white leading-relaxed">
+                        {settings.contact.address}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-slate-400 block">Working Hours</span>
-                    <span className="font-semibold text-white">24x7 Support Available</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0 text-purple-400">
-                    <MapPin className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block">Head Office Address</span>
-                    <span className="font-semibold text-white leading-relaxed">
-                      Flat/Office-201, second floor, A wing Building, Vasai East<br />
-                      Agnes Paradise Building, Opposite Vijay Paradise, 401208.
-                    </span>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
+
+            {/* Google Map Embed */}
+            {settings.contact.mapEmbedUrl && (
+              <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800/80 rounded-3xl overflow-hidden h-60 shadow-xl">
+                <iframe
+                  src={settings.contact.mapEmbedUrl}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Office Location Map"
+                />
+              </div>
+            )}
 
             {/* Benefits List */}
             <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800/80 rounded-3xl p-6 space-y-4">

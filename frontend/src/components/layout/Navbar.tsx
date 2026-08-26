@@ -7,6 +7,8 @@ import Login from "../forms/Login";
 import { useAppSelector, useAppDispatch, logoutThunk } from "@/store";
 import Image from "next/image";
 
+import { useSiteSettings } from "@/context/SiteSettingsContext";
+
 const NAV_ITEMS = [
   { name: "Home", path: "/" },
   { name: "Packages", path: "/packages" },
@@ -17,6 +19,7 @@ const NAV_ITEMS = [
 ];
 
 export const Navbar = () => {
+  const { settings } = useSiteSettings();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -69,13 +72,11 @@ export const Navbar = () => {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0 py-1">
-              <Image
-                src="/logo.png"
-                alt="TripToo Travels"
-                width={200}
-                height={60}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={settings.logo?.url || "/logo.png"}
+                alt="Travel2Dubai"
                 className="h-12 sm:h-14 lg:h-16 w-auto object-contain transition-transform duration-200 hover:scale-105"
-                priority
               />
             </Link>
 
