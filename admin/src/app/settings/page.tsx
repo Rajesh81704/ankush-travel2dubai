@@ -100,9 +100,7 @@ export default function SettingsPage() {
     formData.append("file", file);
 
     try {
-      const res = await api.post("/upload/image", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await api.post<{ url?: string; public_id?: string; data?: { url?: string; public_id?: string } }>("/upload/image", formData, true);
 
       const uploadedImage = {
         url: res.data?.url || res.data?.data?.url || "",
