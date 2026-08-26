@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
+import { uploadFilesToR2 } from "@/lib/r2-upload";
 import { SiteSettings } from "@/types/siteSettings";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -96,21 +97,18 @@ export default function SettingsPage() {
     if (!file) return;
 
     setUploadingField(fieldPath);
-    const formData = new FormData();
-    formData.append("file", file);
 
     try {
-      const res = await api.post<{ url?: string; public_id?: string; data?: { url?: string; public_id?: string } }>("/upload/image", formData, true);
-
-      const uploadedImage = {
-        url: res.data?.url || res.data?.data?.url || "",
-        public_id: res.data?.public_id || res.data?.data?.public_id || "",
-      };
-
-      if (!uploadedImage.url) {
-        toast.error("Image upload returned empty URL");
+      const uploaded = await uploadFilesToR2([file], "misc");
+      if (!uploaded || uploaded.length === 0) {
+        toast.error("Failed to upload image to CDN");
         return;
       }
+
+      const uploadedImage = {
+        url: uploaded[0].publicUrl,
+        public_id: uploaded[0].key,
+      };
 
       // Update nested state
       if (fieldPath === "logo") {
