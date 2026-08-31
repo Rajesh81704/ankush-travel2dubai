@@ -7,12 +7,12 @@ import Link from "next/link";
 import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Triptoo Travels - Explore Your Dream Destinations | Travel Packages",
+  title: "Travel2Dubai - Explore Your Dream Destinations | Travel Packages",
   description:
-    "Discover curated travel packages across India and world. Book your next adventure with Triptoo Travels. Best deals on tours, hotels, and flights. Plan your dream vacation today!",
+    "Discover curated travel packages across Dubai and the world. Book your next adventure with Travel2Dubai. Best deals on tours, hotels, and flights. Plan your dream vacation today!",
   keywords: ["travel packages", "tour deals", "vacation", "adventure", "travel agencies", "dubai visa"],
   openGraph: {
-    title: "Triptoo Travels - Book Your Dream Vacation",
+    title: "Travel2Dubai - Book Your Dream Vacation",
     description: "Curated travel packages and experiences tailored for you",
     type: "website",
   },

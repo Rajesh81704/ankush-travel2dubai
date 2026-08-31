@@ -291,7 +291,7 @@ export default function ContactPage() {
 
             {/* Benefits List */}
             <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800/80 rounded-3xl p-6 space-y-4">
-              <h3 className="text-sm font-bold text-white">Why Book With Triptoo Travels?</h3>
+              <h3 className="text-sm font-bold text-white">Why Book With Travel2Dubai?</h3>
               <ul className="space-y-2.5 text-xs">
                 {benefits.map((b, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-slate-300">

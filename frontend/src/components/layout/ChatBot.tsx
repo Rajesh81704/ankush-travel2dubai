@@ -17,7 +17,7 @@ export const ChatBot: React.FC = () => {
     {
       id: "1",
       sender: "bot",
-      text: "👋 Hi! Welcome to Triptoo Travels! I'm your AI Travel Assistant. How can I help you plan your dream vacation today?",
+      text: "👋 Hi! Welcome to Travel2Dubai! I'm your AI Travel Assistant. How can I help you plan your dream vacation today?",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       options: [
         { label: "🔥 Top Trending Packages", action: "packages" },
@@ -126,7 +126,7 @@ export const ChatBot: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-bold text-sm text-white flex items-center gap-1.5">
-                  Triptoo AI Guide
+                  Travel2Dubai AI Guide
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                 </h3>
                 <p className="text-[11px] text-emerald-400 flex items-center gap-1">

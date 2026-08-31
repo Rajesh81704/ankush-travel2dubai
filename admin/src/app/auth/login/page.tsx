@@ -62,7 +62,7 @@ export default function LoginPage() {
 
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-[11px] font-bold uppercase tracking-wider mb-2 border border-amber-500/20">
-              <Sparkles className="w-3.5 h-3.5" /> Management Console
+              Management Console
             </div>
             <CardTitle className="text-2xl font-extrabold tracking-tight text-white">
               Travel2Dubai Admin
