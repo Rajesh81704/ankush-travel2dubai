@@ -7,8 +7,8 @@ import { Footer } from "@/components/layout/Footer";
 import { UserWrapper } from "@/components/layout/UserWrapper";
 import { ReduxStoreProvider } from "@/store";
 import { ChatBot } from "@/components/layout/ChatBot";
-
 import { SiteSettingsProvider } from "@/context/SiteSettingsContext";
+import { DynamicFavicon } from "@/components/common/DynamicFavicon";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -17,26 +17,25 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Triptoo Travels - Curated Journeys, Premium Tour Packages & Visa Assistance",
+  title: "Travel2Dubai - Curated Journeys, Premium Tour Packages & Visa Assistance",
   description:
-    "Book luxury and budget travel tour packages, flight bookings, hotel stays, visa application assistance, and customized holiday itineraries with Triptoo Travels.",
+    "Book luxury and budget Travel2Dubai tour packages, flight bookings, hotel stays, visa application assistance, and customized holiday itineraries.",
   keywords: [
-    "Triptoo Travels", "Tour Packages", "Holiday Packages", "Kashmir Tour Packages",
-    "Meghalaya Tours", "Dubai Visa", "Flight Bookings", "Travel Agency Faridabad",
-    "International Vacations", "Customized Itineraries"
+    "Travel2Dubai", "Dubai Tour Packages", "Holiday Packages", "Dubai Visa",
+    "Desert Safari", "Flight Bookings", "International Vacations", "Customized Itineraries"
   ],
   openGraph: {
-    title: "Triptoo Travels - Curated Journeys & World Class Vacations",
+    title: "Travel2Dubai - Curated Journeys & World Class Vacations",
     description: "Explore hand-crafted holiday packages, flights, hotels, and hassle-free visa processing.",
-    url: "https://www.triptootravels.com",
-    siteName: "Triptoo Travels",
+    url: "https://travel2dubai.co.in",
+    siteName: "Travel2Dubai",
     locale: "en_US",
     type: "website",
   },
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
 
@@ -53,6 +52,7 @@ export default function RootLayout({
         <ReduxStoreProvider>
           <UserWrapper>
             <SiteSettingsProvider>
+              <DynamicFavicon />
               <Navbar />
               {children}
               <ChatBot />
