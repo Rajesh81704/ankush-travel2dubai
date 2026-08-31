@@ -42,6 +42,32 @@ export interface ISiteSettings extends Document {
     benefits?: string[];
     bannerImage?: { url: string; public_id?: string };
   };
+  paymentDetails: {
+    accountName: string;
+    bankName: string;
+    accountNumber: string;
+    ifscCode: string;
+    branch: string;
+    upiId?: string;
+    upiQrImage?: { url: string; public_id?: string };
+  };
+  announcementBar: {
+    enabled: boolean;
+    text: string;
+    link?: string;
+  };
+  offices?: Array<{
+    country: string;
+    flag: string;
+    name: string;
+    address: string;
+    note?: string;
+  }>;
+  legal: {
+    privacyPolicy: string;
+    termsAndConditions: string;
+    refundPolicy: string;
+  };
 }
 
 const siteSettingsSchema = new Schema<ISiteSettings>(
@@ -121,6 +147,64 @@ const siteSettingsSchema = new Schema<ISiteSettings>(
       bannerImage: {
         url: { type: String, default: "" },
         public_id: { type: String, default: "" },
+      },
+    },
+    paymentDetails: {
+      accountName: { type: String, default: "TRAVEL2DUBAI PRIVATE LIMITED" },
+      bankName: { type: String, default: "ICICI Bank" },
+      accountNumber: { type: String, default: "924020012345678" },
+      ifscCode: { type: String, default: "ICIC0000123" },
+      branch: { type: String, default: "Vasai East, Mumbai" },
+      upiId: { type: String, default: "travel2dubai@icici" },
+      upiQrImage: {
+        url: { type: String, default: "" },
+        public_id: { type: String, default: "" },
+      },
+    },
+    announcementBar: {
+      enabled: { type: Boolean, default: false },
+      text: { type: String, default: "🔥 Special Discount: Get up to 20% off on Dubai Luxury Desert Safaris!" },
+      link: { type: String, default: "/packages" },
+    },
+    offices: {
+      type: [
+        {
+          country: { type: String, default: "" },
+          flag: { type: String, default: "" },
+          name: { type: String, default: "" },
+          address: { type: String, default: "" },
+          note: { type: String, default: "" },
+        },
+      ],
+      default: [
+        {
+          country: "India — Headquarters",
+          flag: "🇮🇳",
+          name: "India Corporate Desk",
+          address: "Suite 402, Travel Plaza, Connaught Place, New Delhi, India 110001",
+          note: "Main Billing & Operations Desk",
+        },
+        {
+          country: "Dubai, UAE",
+          flag: "🇦🇪",
+          name: "Dubai Operations Office",
+          address: "Shop #03, AL Souq Al Kabeer, Meena Bazar, Burdubai, Dubai, UAE",
+          note: "PO Box: 87867",
+        },
+      ],
+    },
+    legal: {
+      privacyPolicy: {
+        type: String,
+        default: "Your privacy and trust are our top priorities at Travel2Dubai. We collect personal information solely for processing holiday packages, hotel reservations, flight tickets, and visa applications. We do not sell or trade your data to third parties.",
+      },
+      termsAndConditions: {
+        type: String,
+        default: "All tour package bookings are confirmed upon receipt of advance deposit or full payment as specified in your booking invoice. Payments made via bank transfer, UPI, or card must match invoice details.",
+      },
+      refundPolicy: {
+        type: String,
+        default: "Approved refunds will be processed back to the original payment source or bank account within 5 to 7 working days from the cancellation confirmation date.",
       },
     },
   },

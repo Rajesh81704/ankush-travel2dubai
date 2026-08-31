@@ -66,18 +66,41 @@ export const Navbar = () => {
 
   return (
     <>
+      {/* ── Top Announcement Ticker ── */}
+      {settings.announcementBar?.enabled && settings.announcementBar?.text && (
+        <div className="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-xs py-1.5 px-4 text-center z-[51] relative flex items-center justify-center gap-2 shadow-sm">
+          <span>{settings.announcementBar.text}</span>
+          {settings.announcementBar.link && (
+            <Link href={settings.announcementBar.link} className="underline hover:text-white transition-colors">
+              Learn More &rarr;
+            </Link>
+          )}
+        </div>
+      )}
+
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 print:hidden ${navBg}`}>
         <div className="max-w-[1320px] mx-auto px-5 lg:px-10">
           <div className="flex items-center justify-between h-[78px]">
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0 py-1">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={settings.logo?.url || "/logo.png"}
-                alt="Travel2Dubai"
-                className="h-12 sm:h-14 lg:h-16 w-auto object-contain transition-transform duration-200 hover:scale-105"
-              />
+              {settings.logo?.url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={settings.logo.url}
+                  alt="Travel2Dubai"
+                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain transition-transform duration-200 hover:scale-105"
+                />
+              ) : (
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-extrabold text-lg">
+                    T2D
+                  </div>
+                  <span className="text-xl font-extrabold text-amber-400 tracking-tight">
+                    Travel<span className="text-white">2Dubai</span>
+                  </span>
+                </div>
+              )}
             </Link>
 
             {/* Desktop Nav Links */}

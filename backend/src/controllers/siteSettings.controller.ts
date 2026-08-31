@@ -38,7 +38,6 @@ export const updateSiteSettings = async (req: Request, res: Response) => {
     if (!settings) {
       settings = await SiteSettingsModel.create(updateData);
     } else {
-      // Merge updateData into settings document
       if (updateData.logo) settings.logo = { ...settings.logo, ...updateData.logo };
       if (updateData.footerLogo) settings.footerLogo = { ...settings.footerLogo, ...updateData.footerLogo };
       if (updateData.hero) settings.hero = { ...settings.hero, ...updateData.hero };
@@ -46,6 +45,10 @@ export const updateSiteSettings = async (req: Request, res: Response) => {
       if (updateData.footer) settings.footer = { ...settings.footer, ...updateData.footer };
       if (updateData.aboutUs) settings.aboutUs = { ...settings.aboutUs, ...updateData.aboutUs };
       if (updateData.b2b) settings.b2b = { ...settings.b2b, ...updateData.b2b };
+      if (updateData.paymentDetails) settings.paymentDetails = { ...settings.paymentDetails, ...updateData.paymentDetails };
+      if (updateData.announcementBar) settings.announcementBar = { ...settings.announcementBar, ...updateData.announcementBar };
+      if (updateData.offices) settings.offices = updateData.offices;
+      if (updateData.legal) settings.legal = { ...settings.legal, ...updateData.legal };
 
       await settings.save();
     }

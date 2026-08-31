@@ -13,6 +13,7 @@ import api from "@/lib/api";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/store";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
 import Login from "@/components/forms/Login";
 import { Download, CreditCard, Building, PhoneCall, MessageSquare, X, CheckCircle, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
@@ -32,6 +33,7 @@ export default function PackageDetailPage({ params }: PackageDetailPageProps) {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const { isLoggedIn, user } = useAppSelector((state) => state.auth);
+  const { settings } = useSiteSettings();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -244,25 +246,46 @@ export default function PackageDetailPage({ params }: PackageDetailPageProps) {
             <div className="bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-3.5 text-xs text-slate-300">
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
                 <span className="text-slate-400">Company Name:</span>
-                <span className="font-bold text-white text-sm">TRIPTOO TRAVELS PRIVATE LIMITED</span>
+                <span className="font-bold text-white text-sm">{settings.paymentDetails.accountName}</span>
               </div>
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
                 <span className="text-slate-400">Bank Name:</span>
-                <span className="font-bold text-white">ICICI Bank</span>
+                <span className="font-bold text-white">{settings.paymentDetails.bankName}</span>
               </div>
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
                 <span className="text-slate-400">Account Number:</span>
-                <span className="font-mono font-bold text-amber-400 text-sm">924020012345678</span>
+                <span className="font-mono font-bold text-amber-400 text-sm">{settings.paymentDetails.accountNumber}</span>
               </div>
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
                 <span className="text-slate-400">IFSC Code:</span>
-                <span className="font-mono font-bold text-emerald-400 text-sm">ICIC0000123</span>
+                <span className="font-mono font-bold text-emerald-400 text-sm">{settings.paymentDetails.ifscCode}</span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
                 <span className="text-slate-400">Branch Location:</span>
-                <span className="font-semibold text-white">Vasai East, 401208</span>
+                <span className="font-semibold text-white">{settings.paymentDetails.branch}</span>
               </div>
+              {settings.paymentDetails.upiId && (
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">UPI ID / VPA:</span>
+                  <span className="font-mono font-bold text-sky-400 text-xs">{settings.paymentDetails.upiId}</span>
+                </div>
+              )}
             </div>
+
+            {/* UPI QR Code Image Display if uploaded */}
+            {settings.paymentDetails.upiQrImage?.url && (
+              <div className="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-center space-y-2">
+                <p className="text-xs font-bold text-amber-400 uppercase tracking-wider">Scan UPI QR Code to Pay</p>
+                <div className="relative w-48 h-48 mx-auto border border-slate-700/60 rounded-xl overflow-hidden bg-white p-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={settings.paymentDetails.upiQrImage.url}
+                    alt="UPI QR Code"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Contact & International WhatsApp */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">

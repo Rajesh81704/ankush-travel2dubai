@@ -46,4 +46,30 @@ export interface SiteSettings {
     benefits?: string[];
     bannerImage?: ImageMedia;
   };
+  paymentDetails: {
+    accountName: string;
+    bankName: string;
+    accountNumber: string;
+    ifscCode: string;
+    branch: string;
+    upiId?: string;
+    upiQrImage?: ImageMedia;
+  };
+  announcementBar: {
+    enabled: boolean;
+    text: string;
+    link?: string;
+  };
+  offices?: Array<{
+    country: string;
+    flag: string;
+    name: string;
+    address: string;
+    note?: string;
+  }>;
+  legal: {
+    privacyPolicy: string;
+    termsAndConditions: string;
+    refundPolicy: string;
+  };
 }

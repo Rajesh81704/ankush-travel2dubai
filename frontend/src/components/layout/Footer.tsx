@@ -65,14 +65,25 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-5">
-            <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3.5 py-2 inline-flex items-center justify-center shadow-md">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={settings.footerLogo?.url || settings.logo?.url || "/logo.png"}
-                alt="Travel2Dubai"
-                className="h-12 lg:h-14 w-auto object-contain"
-              />
-            </div>
+            {(settings.footerLogo?.url || settings.logo?.url) ? (
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3.5 py-2 inline-flex items-center justify-center shadow-md">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={settings.footerLogo?.url || settings.logo?.url}
+                  alt="Travel2Dubai"
+                  className="h-12 lg:h-14 w-auto object-contain"
+                />
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-extrabold text-lg">
+                  T2D
+                </div>
+                <span className="text-xl font-extrabold text-amber-400 tracking-tight">
+                  Travel<span className="text-white">2Dubai</span>
+                </span>
+              </div>
+            )}
             <p className="text-[14px] text-gray-400 leading-relaxed max-w-[280px]">
               {settings.footer.tagline || "Your trusted partner for memorable travel packages and hassle-free international visas."}
             </p>
@@ -194,41 +205,23 @@ export const Footer = () => {
         </div>
 
         {/* Global Offices */}
-        <div className="border-t border-gray-800 pt-10 pb-6 mb-4">
-          <h4 className="text-white font-bold text-[15px] mb-6">Our Global Offices</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              {
-                city: "India (HQ)",
-                address: "Flat/Office-201, 2nd Floor, A Wing, Agnes Paradise Building, Opp. Vijay Paradise, Vasai East, 401208",
-                flag: "🇮🇳",
-              },
-              {
-                city: "Dubai, UAE",
-                address: "Shop #03, AL Souq Al Kabeer, Meena Bazar, Burdubai. PO Box: 87867",
-                flag: "🇦🇪",
-              },
-              {
-                city: "Singapore",
-                address: "291, Seragoon Road #01-01, Seragoon Building, 218107",
-                flag: "🇸🇬",
-              },
-              {
-                city: "Hong Kong",
-                address: "Cheung Lee Commercial Building, 25 Kimberley Road, Tsim Sha Tsui, Kowloon. Licence: 350318",
-                flag: "🇭🇰",
-              },
-            ].map(({ city, address, flag }) => (
-              <div key={city} className="flex items-start gap-3">
-                <span className="text-xl mt-0.5">{flag}</span>
-                <div>
-                  <p className="text-white text-[13px] font-semibold mb-0.5">{city}</p>
-                  <p className="text-gray-500 text-[12px] leading-relaxed">{address}</p>
+        {(settings.offices && settings.offices.length > 0) && (
+          <div className="border-t border-gray-800 pt-10 pb-6 mb-4">
+            <h4 className="text-white font-bold text-[15px] mb-6">Our Global Offices</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {settings.offices.map((off, idx) => (
+                <div key={idx} className="flex items-start gap-3">
+                  <span className="text-xl mt-0.5">{off.flag || "🌐"}</span>
+                  <div>
+                    <p className="text-white text-[13px] font-semibold mb-0.5">{off.country || off.name}</p>
+                    <p className="text-gray-500 text-[12px] leading-relaxed">{off.address}</p>
+                    {off.note && <p className="text-amber-500/80 text-[11px] mt-0.5">{off.note}</p>}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Bottom bar */}
         <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">

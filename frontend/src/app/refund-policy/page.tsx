@@ -1,13 +1,12 @@
-import React from "react";
-import { Metadata } from "next";
-import { RefreshCw, CheckCircle2, Clock, AlertTriangle, Mail, Phone } from "lucide-react";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Refund & Cancellation Policy | Triptoo Travels",
-  description: "Understand the cancellation guidelines and refund procedures for Triptoo Travels tour packages.",
-};
+import React from "react";
+import { RefreshCw, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
+import { useSiteSettings } from "@/context/SiteSettingsContext";
 
 export default function RefundPolicyPage() {
+  const { settings } = useSiteSettings();
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 pt-28 pb-20 px-6 lg:px-12">
       <div className="max-w-4xl mx-auto space-y-12">
@@ -18,7 +17,7 @@ export default function RefundPolicyPage() {
           </div>
           <h1 className="text-4xl lg:text-5xl font-extrabold text-white">Refund & Cancellation Policy</h1>
           <p className="text-slate-400 text-sm max-w-2xl mx-auto">
-            Clear, transparent, and fair cancellation policies for all bookings at Triptoo Travels.
+            Clear, transparent, and fair cancellation policies for all bookings at Travel2Dubai.
           </p>
         </div>
 
@@ -26,7 +25,17 @@ export default function RefundPolicyPage() {
         <div className="space-y-8 text-slate-300 text-sm leading-relaxed">
           <section className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 lg:p-8 space-y-4">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Clock className="w-5 h-5 text-amber-400" /> 1. Cancellation Timeline & Fees
+              <CheckCircle2 className="w-5 h-5 text-amber-400" /> Refund & Cancellation Guidelines
+            </h2>
+            <p className="whitespace-pre-line text-slate-300 leading-relaxed">
+              {settings.legal.refundPolicy ||
+                "Approved refunds will be processed back to the original payment source or bank account within 5 to 7 working days from the cancellation confirmation date."}
+            </p>
+          </section>
+
+          <section className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 lg:p-8 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <Clock className="w-5 h-5 text-amber-400" /> Cancellation Timeline & Fees
             </h2>
             <div className="space-y-2">
               <div className="flex items-center justify-between p-3 bg-slate-800/60 rounded-xl border border-slate-700/50">
@@ -46,25 +55,11 @@ export default function RefundPolicyPage() {
 
           <section className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 lg:p-8 space-y-3">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-amber-400" /> 2. Refund Processing Time
+              <AlertTriangle className="w-5 h-5 text-amber-400" /> Non-Refundable Items
             </h2>
-            <p>
-              Approved refunds will be processed back to the original payment source or bank account within <strong>5 to 7 working days</strong> from the cancellation confirmation date.
+            <p className="text-slate-400">
+              Visa processing fees, non-refundable flight ticket deposits, and express visa clearance fees paid to government embassies cannot be refunded once submitted.
             </p>
-          </section>
-
-          <section className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 lg:p-8 space-y-3">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-amber-400" /> 3. Non-Refundable Items & Contact
-            </h2>
-            <p>
-              Flight tickets, visa processing fees, and peak holiday season hotel surcharges are governed by third-party provider rules and may be non-refundable.
-            </p>
-            <div className="mt-4 pt-4 border-t border-slate-800 space-y-2 text-xs text-slate-400">
-              <p className="text-white font-semibold">For Cancellation Requests & Support:</p>
-              <p>Email: <span className="text-amber-400">info@triptootravels.com</span> | <span className="text-amber-400">support@triptootravels.com</span> | <span className="text-amber-400">reservations@triptootravels.com</span> | <span className="text-amber-400">pooja.gupta@triptootravels.com</span></p>
-              <p>Phone / WhatsApp: <span className="text-amber-400">+91 8767656900</span> / <span className="text-amber-400">+18046504477 (24x7 WhatsApp)</span></p>
-            </div>
           </section>
         </div>
       </div>

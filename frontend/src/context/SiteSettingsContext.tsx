@@ -8,6 +8,14 @@ export interface ImageMedia {
   public_id?: string;
 }
 
+export interface OfficeLocation {
+  country: string;
+  flag: string;
+  name: string;
+  address: string;
+  note?: string;
+}
+
 export interface SiteSettings {
   logo?: ImageMedia;
   footerLogo?: ImageMedia;
@@ -49,6 +57,26 @@ export interface SiteSettings {
     content: string;
     benefits?: string[];
     bannerImage?: ImageMedia;
+  };
+  paymentDetails: {
+    accountName: string;
+    bankName: string;
+    accountNumber: string;
+    ifscCode: string;
+    branch: string;
+    upiId?: string;
+    upiQrImage?: ImageMedia;
+  };
+  announcementBar: {
+    enabled: boolean;
+    text: string;
+    link?: string;
+  };
+  offices: OfficeLocation[];
+  legal: {
+    privacyPolicy: string;
+    termsAndConditions: string;
+    refundPolicy: string;
   };
 }
 
@@ -99,6 +127,40 @@ const defaultSettings: SiteSettings = {
       "Custom White-Label Quotations & Itinerary Builder",
     ],
   },
+  paymentDetails: {
+    accountName: "TRAVEL2DUBAI PRIVATE LIMITED",
+    bankName: "ICICI Bank",
+    accountNumber: "924020012345678",
+    ifscCode: "ICIC0000123",
+    branch: "Vasai East, Mumbai",
+    upiId: "travel2dubai@icici",
+  },
+  announcementBar: {
+    enabled: false,
+    text: "🔥 Special Discount: Get up to 20% off on Dubai Luxury Desert Safaris!",
+    link: "/packages",
+  },
+  offices: [
+    {
+      country: "India — Headquarters",
+      flag: "🇮🇳",
+      name: "India Corporate Desk",
+      address: "Suite 402, Travel Plaza, Connaught Place, New Delhi, India 110001",
+      note: "Main Billing & Operations Desk",
+    },
+    {
+      country: "Dubai, UAE",
+      flag: "🇦🇪",
+      name: "Dubai Operations Office",
+      address: "Shop #03, AL Souq Al Kabeer, Meena Bazar, Burdubai, Dubai, UAE",
+      note: "PO Box: 87867",
+    },
+  ],
+  legal: {
+    privacyPolicy: "Your privacy and trust are our top priorities at Travel2Dubai. We collect personal information solely for processing holiday packages, hotel reservations, flight tickets, and visa applications.",
+    termsAndConditions: "All tour package bookings are confirmed upon receipt of advance deposit or full payment as specified in your booking invoice. Payments made via bank transfer, UPI, or card must match invoice details.",
+    refundPolicy: "Approved refunds will be processed back to the original payment source or bank account within 5 to 7 working days from the cancellation confirmation date.",
+  },
 };
 
 interface SiteSettingsContextType {
@@ -128,6 +190,10 @@ export const SiteSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
             footer: { ...prev.footer, ...res.data.data.footer },
             aboutUs: { ...prev.aboutUs, ...res.data.data.aboutUs },
             b2b: { ...prev.b2b, ...res.data.data.b2b },
+            paymentDetails: { ...prev.paymentDetails, ...res.data.data.paymentDetails },
+            announcementBar: { ...prev.announcementBar, ...res.data.data.announcementBar },
+            legal: { ...prev.legal, ...res.data.data.legal },
+            offices: res.data.data.offices || prev.offices,
           }));
         }
       } catch (err) {
