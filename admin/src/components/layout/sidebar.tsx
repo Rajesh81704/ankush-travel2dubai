@@ -119,7 +119,7 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
         <div>
           <div className="p-6 font-bold text-xl flex items-center gap-2 text-white">
             <Home className="w-6 h-6 text-amber-400" />
-            Triptoo Admin
+            Travel2Dubai Admin
           </div>
           <nav className="mt-4 flex flex-col gap-1">
             {sidebarLinks.map((link) => {
